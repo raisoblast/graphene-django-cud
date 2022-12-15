@@ -353,7 +353,8 @@ class DjangoCudBase(Mutation):
                     if name in auto_context_fields:
                         del model_field_values[name]
 
-                    name = getattr(field, "db_column", None) or name + "_id"
+                    # name = getattr(field, "db_column", None) or name + "_id"
+                    name = name + "_id"
                     new_value = cls.resolve_id(value)
                 elif field_is_many_to_many:
                     new_value = cls.resolve_ids(value)
