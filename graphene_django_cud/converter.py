@@ -109,7 +109,7 @@ def convert_django_field_with_choices(
         # Fetch this from registry, if exists. We don't want to duplicate enum fields.
         if registry:
             from_registry = registry.get_converted_field(field)
-            if from_registry:
+            if from_registry and hasattr(from_registry, 'kwargs'):
                 from_registry.kwargs["description"] = field.help_text
                 from_registry.kwargs["required"] = is_required(field, required)
                 return from_registry
