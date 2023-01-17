@@ -58,6 +58,8 @@ def convert_choice_name(name):
         assert_valid_name(name)
     except AssertionError:
         name = "A_%s" % name
+    except GraphQLError:
+        name = "A_%s" % name
     return name
 
 
