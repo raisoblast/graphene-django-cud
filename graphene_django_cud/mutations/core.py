@@ -795,3 +795,5 @@ class DjangoCudBaseOptions(MutationOptions):
     field_types = None
 
     custom_fields = None
+
+    using = None

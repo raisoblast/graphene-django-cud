@@ -218,7 +218,7 @@ class DjangoBatchUpdateMutation(DjangoCudBase):
 
         updated_objs = []
 
-        with transaction.atomic():
+        with transaction.atomic(using=cls._meta.using):
             for data in input:
                 cls.validate(root, info, data, input)
                 obj = cls.get_object(root, info, data, input)

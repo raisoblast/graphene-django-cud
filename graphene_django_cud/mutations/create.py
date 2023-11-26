@@ -46,6 +46,7 @@ class DjangoCreateMutation(DjangoCudBase):
         field_types=None,
         ignore_primary_key=True,
         custom_fields=None,
+        using=None,
         **kwargs,
     ):
         registry = get_global_registry()
@@ -155,6 +156,7 @@ class DjangoCreateMutation(DjangoCudBase):
         _meta.InputType = InputType
         _meta.input_type_name = input_type_name
         _meta.login_required = login_required or (_meta.permissions and len(_meta.permissions) > 0)
+        _meta.using = using
 
         super().__init_subclass_with_meta__(arguments=arguments, _meta=_meta, **kwargs)
 
@@ -197,7 +199,7 @@ class DjangoCreateMutation(DjangoCudBase):
         Model = cls._meta.model
         auto_context_fields = cls._meta.auto_context_fields or {}
 
-        with transaction.atomic():
+        with transaction.atomic(using=cls._meta.using):
             obj = cls.create_obj(
                 input,
                 info,
